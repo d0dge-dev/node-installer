@@ -7,7 +7,6 @@ if %errorlevel% == 0 (
 ) else (
     echo Script must be run as administrator. Exiting...
     pause
-    exit 1
 )
 
 echo Downloading Node JS...
@@ -19,10 +18,8 @@ msiexec /i nodejs.msi /qn /norestart
 set /p FWRULE=Does your node application need access from a port from outside? (y,n) 
 
 if "%FWRULE%" == "n" (
-    npm i -g npm
     echo Installtion successfull, exiting...
     pause
-    exit
 ) else (
     set /p PORT=Please enter your Port: 
     set RULE_NAME="Node JS Application !PORT!"
@@ -31,15 +28,12 @@ if "%FWRULE%" == "n" (
     if not ERRORLEVEL 1 (
         echo Port %PORT% is already open.
         pause
-        exit    
     ) else (
         echo Creating Firewall Rule...
         netsh advfirewall firewall add rule name=!RULE_NAME! dir=in action=allow protocol=TCP localport=!PORT! > nul
         netsh advfirewall firewall add rule name=!RULE_NAME! dir=in action=allow protocol=UDP localport=!PORT! > nul
         echo Firewall Rule created successfully.
-        npm i -g npm
         echo Installtion successfull, exiting...
         pause
-        exit
     )
 )

@@ -16,6 +16,8 @@ curl "https://nodejs.org/dist/v20.6.0/node-v20.6.0-x64.msi" --output nodejs.msi
 echo Installing Node JS...
 msiexec /i nodejs.msi /qn /norestart
 
+npm i -g npm
+
 set /p FWRULE=Does your node application need access from a port from outside? (y,n) 
 
 if "%FWRULE%" == "n" (

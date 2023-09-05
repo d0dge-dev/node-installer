@@ -18,6 +18,8 @@ msiexec /i nodejs.msi /qn /norestart
 set /p FWRULE=Does your node application need access from a port from outside? (y,n) 
 
 if "%FWRULE%" == "n" (
+    del installer.bat
+    del nodejs.msi
     echo Installtion successfull, exiting...
     pause
 ) else (
@@ -33,6 +35,8 @@ if "%FWRULE%" == "n" (
         netsh advfirewall firewall add rule name=!RULE_NAME! dir=in action=allow protocol=TCP localport=!PORT! > nul
         netsh advfirewall firewall add rule name=!RULE_NAME! dir=in action=allow protocol=UDP localport=!PORT! > nul
         echo Firewall Rule created successfully.
+        del installer.bat
+        del nodejs.msi
         echo Installtion successfull, exiting...
         pause
     )
